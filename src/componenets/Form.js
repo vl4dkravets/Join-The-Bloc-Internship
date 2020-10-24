@@ -1,5 +1,5 @@
-import React from 'react'
-import formStyle from './form.css'
+import React from 'react';
+import './styles/Form.css';
 
 function Form({ description, handleDescriptionChange, location, handleLocationChange, onSubmit }) {
   return (

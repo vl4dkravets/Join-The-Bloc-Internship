@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SearchForm from './Components/Form.js';
-import JobLists from './Components/JobLists'
+import SearchForm from './componenets/Form'
+import JobLists from './componenets/JobLists'
 import axios from 'axios'
 
 function App() {
@@ -12,12 +12,12 @@ function App() {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   }
-  
+
   //location input handle
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   }
-  
+
   //submit button handle
   const onSubmit = e => {
     e.preventDefault();
@@ -27,8 +27,8 @@ function App() {
 
   //get data from github job API (fetching by description and location)
   const url = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${description}&location=${location}`
-  const getData = () => {
-    axios.get(url)
+  const getData = async () => {
+    await axios.get(url)
       .then(res => {
         console.log(res)
         setPosts(res.data)
@@ -40,16 +40,16 @@ function App() {
 
   return (
     <div>
-    <SearchForm
+      <SearchForm
         description={description}
         handleDescriptionChange={handleDescriptionChange}
         location={location}
         handleLocationChange={handleLocationChange}
         onSubmit={onSubmit} />
 
-    {
+      {
         posts.map((job) => <JobLists job={job} key={job.id} />)
-    }
+      }
     </div>
   )
 }
