@@ -1,23 +1,21 @@
 import React from 'react'
-/*
-JobLists display a list of jobs
-jobLists components receives job as props to access job's info
-*/
 const JobLists = (props) => (
-    <div className='card'>
+    <div className='card flex shadow-xl mx-20 p-5'>
         <div>
-            <img src={props.job.company_logo} alt={props.job.company} width="125" height="100"></img>
+            <img className='image' src={props.job.company_logo} alt={props.job.company} width="150" height="150"></img>
         </div>
-        <div><h3>{props.job.title}</h3></div>
-        <div><p>Company: {props.job.company}</p></div>
+        <div className='job-info flex flex-col justify-between ml-8 p-5'>
+            <h3 className='title font-bold'>{props.job.title}</h3>
+            <p className='company text-teal-700'>Company: {props.job.company}</p>
+            <p className='company_url text-blue-500'><a href={props.job.company_url} target="_blank">Visit Company website</a></p>
+            <p className='location'>Location: {props.job.location}</p>
+            <p className='job-type'>{props.job.type}</p>
+            <p className='company_url text-blue-500'><a href={props.job.url} target="_blank">Click here to apply</a></p>
+            <p className='post-time text-gray-700'>Posted at: {new Date(props.job.created_at).toLocaleDateString()}</p>
+        </div>
         <div>
-            <p>{props.job.type}</p>
-            <p>Location: {props.job.location}</p>
-            <p>Posted at: {props.job.created_at}</p>
         </div>
-        <br></br>
-        <br></br>
-        <br></br>      
+
     </div>
 )
 export default JobLists
