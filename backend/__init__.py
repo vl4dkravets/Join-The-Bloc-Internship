@@ -30,7 +30,7 @@ def job_function():
 
 
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(job_function, 'interval', seconds=60)
+scheduler.add_job(job_function, 'interval', days=1)
 
 # Explicitly kick off the background thread
 scheduler.start()
