@@ -1,9 +1,11 @@
 import psycopg2
 
-DB_NAME = "jjvqoodr"
-DB_USER = "jjvqoodr"
-DB_PASS = "6PjWRXPt25Kvp6JSEWCLpJrGvgEwC6Hx"
-DB_HOST = "otto.db.elephantsql.com"
+#postgres://kcukrxgp:RIvrfJdDA-_SvMlYTJCpnFuN0FR5kiEt@lallah.db.elephantsql.com:5432/kcukrxgp
+
+DB_NAME = "kcukrxgp"
+DB_USER = "kcukrxgp"
+DB_PASS = "RIvrfJdDA-_SvMlYTJCpnFuN0FR5kiEt"
+DB_HOST = "lallah.db.elephantsql.com"
 DB_PORT = "5432"
 
 
@@ -25,7 +27,7 @@ def return_jobs(job, location):
         # if field are empty => checking for it in the first place & returning the res
         # otherwise, more work & checking is needed
         if (not job) and (not location):
-            cursor.execute("SELECT * FROM job_posts")
+            cursor.execute("SELECT * FROM jobs")
             conn.commit()
             return cursor.fetchall()
 
@@ -35,7 +37,7 @@ def return_jobs(job, location):
             job = job.strip()
             location = location.strip()
 
-            sql_command = "SELECT * FROM job_posts WHERE job_title ~* %s AND location ~* %s"
+            sql_command = "SELECT * FROM jobs WHERE job_title ~* %s AND location ~* %s"
             # Executing SQL command using the execute() method
             cursor.execute(sql_command, [job, location])
 
@@ -43,14 +45,14 @@ def return_jobs(job, location):
             # remove whitespace before & after the word
             job = job.strip()
 
-            sql_command = "SELECT * FROM test_jobs WHERE job_title ~* %s"
+            sql_command = "SELECT * FROM jobs WHERE job_title ~* %s"
             cursor.execute(sql_command, [job])
 
         elif location != '' and (not job):
             # remove whitespace before & after the word
             location = location.strip()
 
-            sql_command = "SELECT * FROM test_jobs WHERE location ~* %s"
+            sql_command = "SELECT * FROM jobs WHERE location ~* %s"
             cursor.execute(sql_command, [location])
 
         conn.commit()
