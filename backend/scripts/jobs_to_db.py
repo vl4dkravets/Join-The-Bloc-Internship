@@ -3,18 +3,14 @@ import psycopg2
 import datetime
 import scripts.manage_log_files as manage_log_files
 
-DB_NAME = "rolidahd"
-DB_USER = "rolidahd"
-DB_PASS = "zSidePZAFRFRWsLmEhM5kgqa_B_lCWJJ"
-DB_HOST = "lallah.db.elephantsql.com"
+#
+# Specify Database credentials
+#
+DB_NAME = "jjvqoodr"
+DB_USER = "jjvqoodr"
+DB_PASS = "6PjWRXPt25Kvp6JSEWCLpJrGvgEwC6Hx"
+DB_HOST = "otto.db.elephantsql.com"
 DB_PORT = "5432"
-
-
-# DB_NAME = "jjvqoodr"
-# DB_USER = "jjvqoodr"
-# DB_PASS = "6PjWRXPt25Kvp6JSEWCLpJrGvgEwC6Hx"
-# DB_HOST = "otto.db.elephantsql.com"
-# DB_PORT = "5432"
 
 
 def fill_the_table():
@@ -42,10 +38,11 @@ def fill_the_table():
             due_date = None
             location = job['location']
             url = job['url']
+            company_logo = job['company_logo']
 
             # If the subquery returns at least one row, the result of EXISTS is true.
             # values are passed separately in the execute methods - safe way against SQL injections
-            exist_statement = "SELECT EXISTS(SELECT 1 FROM test_jobs WHERE url = %s);"
+            exist_statement = "SELECT EXISTS(SELECT 1 FROM job_posts WHERE url = %s);"
             cursor.execute(exist_statement, [url])
 
             # Returns result in a list; contains only one value
@@ -62,12 +59,12 @@ def fill_the_table():
             # check order of columns
             # create SQL INSERT command
             # special format against SQL injections
-            sql_command = """INSERT INTO test_jobs
-                                    (job_title,company,job_description,due_date,location, url)
-                                    VALUES (%s, %s, %s, %s, %s, %s);"""
+            sql_command = """INSERT INTO job_posts
+                                    (job_title,company,job_description,due_date,location, url, company_logo)
+                                    VALUES (%s, %s, %s, %s, %s, %s, %s);"""
 
             # Executing SQL command using the execute() method
-            cursor.execute(sql_command, [job_title, company, job_description, due_date, location, url])
+            cursor.execute(sql_command, [job_title, company, job_description, due_date, location, url, company_logo])
             # commit each new data to the table
             conn.commit()
 

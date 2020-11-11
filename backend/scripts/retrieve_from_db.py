@@ -1,9 +1,9 @@
 import psycopg2
 
-DB_NAME = "rolidahd"
-DB_USER = "rolidahd"
-DB_PASS = "zSidePZAFRFRWsLmEhM5kgqa_B_lCWJJ"
-DB_HOST = "lallah.db.elephantsql.com"
+DB_NAME = "jjvqoodr"
+DB_USER = "jjvqoodr"
+DB_PASS = "6PjWRXPt25Kvp6JSEWCLpJrGvgEwC6Hx"
+DB_HOST = "otto.db.elephantsql.com"
 DB_PORT = "5432"
 
 
@@ -25,7 +25,7 @@ def return_jobs(job, location):
         # if field are empty => checking for it in the first place & returning the res
         # otherwise, more work & checking is needed
         if (not job) and (not location):
-            cursor.execute("SELECT * FROM test_jobs")
+            cursor.execute("SELECT * FROM job_posts")
             conn.commit()
             return cursor.fetchall()
 
@@ -35,7 +35,7 @@ def return_jobs(job, location):
             job = job.strip()
             location = location.strip()
 
-            sql_command = "SELECT * FROM test_jobs WHERE job_title ~* %s AND location ~* %s"
+            sql_command = "SELECT * FROM job_posts WHERE job_title ~* %s AND location ~* %s"
             # Executing SQL command using the execute() method
             cursor.execute(sql_command, [job, location])
 
