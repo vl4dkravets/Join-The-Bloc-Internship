@@ -3,12 +3,21 @@ import psycopg2
 import datetime
 import scripts.manage_log_files as manage_log_files
 
+
+#postgres://rolidahd:zSidePZAFRFRWsLmEhM5kgqa_B_lCWJJ@lallah.db.elephantsql.com:5432/rolidahd
 #
 # Specify Database credentials
 #
-DB_NAME = "kcukrxgp"
-DB_USER = "kcukrxgp"
-DB_PASS = "RIvrfJdDA-_SvMlYTJCpnFuN0FR5kiEt"
+#Eli's table
+# DB_NAME = "kcukrxgp"
+# DB_USER = "kcukrxgp"
+# DB_PASS = "RIvrfJdDA-_SvMlYTJCpnFuN0FR5kiEt"
+# DB_HOST = "lallah.db.elephantsql.com"
+# DB_PORT = "5432"
+#Vlad's table
+DB_NAME = "rolidahd"
+DB_USER = "rolidahd"
+DB_PASS = "zSidePZAFRFRWsLmEhM5kgqa_B_lCWJJ"
 DB_HOST = "lallah.db.elephantsql.com"
 DB_PORT = "5432"
 
@@ -35,14 +44,14 @@ def fill_the_table():
             job_title = job['title']
             company = job['company']
             job_description = job['description']
-            due_date = None
+            how_to_apply = job['how_to_apply']
             location = job['location']
             url = job['url']
             company_logo = job['company_logo']
 
             # If the subquery returns at least one row, the result of EXISTS is true.
             # values are passed separately in the execute methods - safe way against SQL injections
-            exist_statement = "SELECT EXISTS(SELECT 1 FROM jobs WHERE url = %s);"
+            exist_statement = "SELECT EXISTS(SELECT 1 FROM test_jobs2 WHERE url = %s);"
             cursor.execute(exist_statement, [url])
 
             # Returns result in a list; contains only one value
@@ -59,12 +68,12 @@ def fill_the_table():
             # check order of columns
             # create SQL INSERT command
             # special format against SQL injections
-            sql_command = """INSERT INTO jobs
-                                    (job_title,company,job_description,due_date,location, url, company_logo)
+            sql_command = """INSERT INTO test_jobs2
+                                    (job_title,company,job_description,how_to_apply,location, url, company_logo)
                                     VALUES (%s, %s, %s, %s, %s, %s, %s);"""
 
             # Executing SQL command using the execute() method
-            cursor.execute(sql_command, [job_title, company, job_description, due_date, location, url, company_logo])
+            cursor.execute(sql_command, [job_title, company, job_description, how_to_apply, location, url, company_logo])
             # commit each new data to the table
             conn.commit()
 
@@ -88,3 +97,4 @@ def fill_the_table():
         # Closing the connection
         conn.close()
         cursor.close()
+
